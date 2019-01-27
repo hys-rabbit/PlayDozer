@@ -1,0 +1,43 @@
+@(indexForm: Form[forms.IndexForm], indexDto: dtos.IndexDto)
+
+@main("Play Dozer") {
+
+    <h1>Play Dozer</h1>
+
+    @helper.form(action = routes.IndexController.post()){
+
+        @helper.inputText(indexForm("name"), '_label -> "名前")
+
+        @helper.inputText(indexForm("amount"), '_label -> "金額")
+
+        <button name="action" value="regist">登録</button>
+
+        @if(!indexDto.personList.isEmpty()){
+            <br />
+            <h3>登録中データ</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>名前</th>
+                        <th>金額</th>
+                        <th>登録日</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(person <- indexDto.personList){
+                    <tr>
+                        <td>@person.name</td>
+                        <td>@person.amount</td>
+                        <td>@person.date</td>
+                        <td><input type="radio" name="id" value="@person.id"></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <button name="action" value="delete">削除</button>
+        }
+
+    }
+
+}
